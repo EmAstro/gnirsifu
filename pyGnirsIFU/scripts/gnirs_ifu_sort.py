@@ -38,6 +38,8 @@ def parser(options=None):
                         help=r"Target name")
     parser.add_argument("-d", "--data_directory", nargs="+", type=str, default="./",
                         help=r"Directory where the data are")
+    parser.add_argument("-r", "--root_filename", nargs="+", type=str, default="S200",
+                        help=r"Root file name")
     parser.add_argument("-a", "--append", action="store_true", default=False,
                         help=r"Append over already created files")
     if options is None:
@@ -62,9 +64,10 @@ def _remove_text_files(data_directory):
 def main(args):
     object_name = lists.from_list_to_string(args.object_name)
     data_directory = lists.from_list_to_string(args.data_directory)
+    root_filename = lists.from_list_to_string(args.root_filename)
     if not args.append:
         _remove_text_files(args.data_directory[0])
-    file_list = sorted(glob.glob(data_directory + "/*.fits"))
+    file_list = sorted(glob.glob(data_directory + "/" + root_filename + "/*.fits"))
     print("Sorting {} files for object: {}".format(len(file_list), object_name))
 
     for file_name in file_list:

@@ -21,7 +21,7 @@ def _clean_list_of_files(list_of_files, list_name):
     list_file = open(list_name, 'w')
 
     for file_name in file_list:
-        list_file.write(file_name)
+        list_file.write(file_name + '\n')
     list_file.close()
 
 
