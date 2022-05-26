@@ -11,6 +11,7 @@ import glob as glob
 import sys
 
 from pyGnirsIFU import __version__
+from pyGnirsIFU.utils import lists
 from pyGnirsIFU.utils import gnirs_fits
 
 KEYWORD_LIST = ['OBJECT', 'OBSTYPE', 'GRATING', 'GRATWAVE', 'DATE-OBS', 'TIME-OBS', 'EXPTIME']
@@ -59,20 +60,12 @@ def _remove_text_files(data_directory):
 
 
 def main(args):
-    from IPython import embed
-    embed()
-
-    if len(args.object_name) > 1:
-        raise ValueError('Please include only one object at the time')
-    object_name = args.object_name[0]
-    if len(args.data_directory) > 1:
-        raise ValueError('Please include only one directory at the time')
+    object_name = lists.from_list_to_string(args.object_name)
+    data_directory = lists.from_list_to_string(args.data_directory)
     if not args.append:
         _remove_text_files(args.data_directory[0])
-    file_list = sorted(glob.glob(args.data_directory[0] + "/*.fits"))
+    file_list = sorted(glob.glob(data_directory + "/*.fits"))
     print("Sorting {} files for object: {}".format(len(file_list), object_name))
-
-
 
     for file_name in file_list:
         primary_header = gnirs_fits.get_primary_header(file_name)
