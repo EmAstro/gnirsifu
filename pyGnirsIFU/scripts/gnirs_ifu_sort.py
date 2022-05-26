@@ -15,11 +15,11 @@ from pyGnirsIFU.utils import lists
 from pyGnirsIFU.utils import gnirs_fits
 
 KEYWORD_LIST = ['OBJECT', 'OBSTYPE', 'GRATING', 'GRATWAVE', 'DATE-OBS', 'TIME-OBS', 'EXPTIME']
-TO_BE_REMOVED_LIST = ['science__grating_*_wl_*.list',
-                      'arc______grating_*_wl_*.list',
-                      'flat_____grating_*_wl_*.list',
-                      'twilight_grating_*_wl_*.list',
-                      'telluric_grating_*_wl_*.list']
+TO_BE_REMOVED_LIST = ['science_*grating_*_wl_*.list',
+                      'arc_*grating_*_wl_*.list',
+                      'flat_*grating_*_wl_*.list',
+                      'twilight_*grating_*_wl_*.list',
+                      'telluric_*ßgrating_*_wl_*.list']
 
 # ToDo fill example
 EXAMPLES = str(r"""EXAMPLES:""" + """\n""" + """\n""" +
