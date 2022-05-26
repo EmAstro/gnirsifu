@@ -12,7 +12,7 @@ gnirs.nsheaders('gnirs')
 reduction_parameters = parameters.Reduction()
 
 
-class Reduce:
+class Reduction:
     def __init__(self, file_list=[], processed_file_list=[], epar=reduction_parameters):
         self.file_list = file_list
         self.processed_file_list = processed_file_list
@@ -52,7 +52,7 @@ class Reduce:
             self.processed_file_list.remove(processed_file)
 
 
-class Flat(Reduce):
+class Flats(Reduction):
     def __init__(self, file_list):
         super(self, file_list=file_list).__init__()
 
