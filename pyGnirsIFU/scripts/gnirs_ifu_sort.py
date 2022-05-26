@@ -37,7 +37,8 @@ def parser(options=None):
                         help=r"Target name")
     parser.add_argument("-d", "--data_directory", nargs="+", type=str, default="./",
                         help=r"Directory where the data are")
-
+    parser.add_argument("-a", "--append", nargs="+", action="store_true", default=False,
+                        help=r"Append over already created files")
     if options is None:
         args = parser.parse_args()
     else:
@@ -58,14 +59,19 @@ def _remove_text_files(data_directory):
 
 
 def main(args):
-    file_list = sorted(glob.glob(args.data_directory + "/*.fits"))
+    if len(args.object_name) > 1:
+        raise ValueError('Please include only one object at the time')
+    object_name = args.object_name[0]
+    if len(args.data_directory) > 1:
+        raise ValueError('Please include only one directory at the time')
+    if not args.append:
+        _remove_text_files(args.data_directory[0])
+    file_list = sorted(glob.glob(args.data_directory[0] + "/*.fits"))
+    print("Sorting {} files for object: {}".format(len(file_list), object_name))
+
     from IPython import embed
     embed()
-    if type(args.object_name) is list:
-        object_name = args.object_name[0]
-    else:
-        object_name = args.object_name
-    print("Sorting files for object: {}".format(args.object_name))
+
     for file_name in file_list:
         primary_header = gnirs_fits.get_primary_header(file_name)
         grating_txt = '_' + str(primary_header["GRATING"]).strip().replace("/", "").ljust(11, "_")
@@ -75,7 +81,7 @@ def main(args):
         for keyword in KEYWORD_LIST:
             txt_line = txt_line + '  ' + '{:<25}'.format(str(primary_header[keyword]))
         txt_line = txt_line + '\n'
-        if (primary_header['OBJECT'] == args.object_name) & (primary_header['OBSTYPE'] == 'OBJECT'):
+        if (primary_header['OBJECT'] == object_name) & (primary_header['OBSTYPE'] == 'OBJECT'):
             with open('science__{}.list'.format(file_label_txt), 'a') as sci_file:
                 sci_file.write(txt_line)
         elif primary_header['OBSTYPE'] == 'ARC':
