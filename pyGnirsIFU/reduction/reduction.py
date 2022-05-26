@@ -24,8 +24,11 @@ class Reduction:
 
     @reduction_parameters.setter
     def reduction_parameters(self, reduction_parameters):
+        from IPython import embed
+        embed()
         if reduction_parameters is None:
-            self._reduction_parameters = parameters.Reduction()
+            _reduction_parameters = parameters.Reduction()
+            self._reduction_parameters = _reduction_parameters
         elif isinstance(reduction_parameters, parameters.Reduction):
             self._reduction_parameters = reduction_parameters
         else:
