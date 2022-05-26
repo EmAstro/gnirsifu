@@ -6,7 +6,7 @@ from astropy.io import ascii
 
 # gnirs.nsprepare.eParam()
 
-from . import parameters
+from pyGnirsIFU.reduction import parameters
 
 gnirs.nsheaders('gnirs')
 
