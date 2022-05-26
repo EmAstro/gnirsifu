@@ -77,13 +77,13 @@ def main(args):
             txt_line = txt_line + '  ' + '{:<25}'.format(str(primary_header[keyword]))
         txt_line = txt_line + '\n'
         if (primary_header['OBJECT'] == object_name) & (primary_header['OBSTYPE'] == 'OBJECT'):
-            with open('science__{}.list'.format(file_label_txt), 'a') as sci_file:
+            with open('science_{}.list'.format(file_label_txt), 'a') as sci_file:
                 sci_file.write(txt_line)
         elif primary_header['OBSTYPE'] == 'ARC':
-            with open('arc______{}.list'.format(file_label_txt), 'a') as arc_file:
+            with open('arc_____{}.list'.format(file_label_txt), 'a') as arc_file:
                 arc_file.write(txt_line)
         elif primary_header['OBSTYPE'] == 'FLAT':
-            with open('flat_____{}.list'.format(file_label_txt), 'a') as flat_file:
+            with open('flat____{}.list'.format(file_label_txt), 'a') as flat_file:
                 flat_file.write(txt_line)
         elif (primary_header['OBJECT'] == 'Twilight') & (primary_header['OBSTYPE'] == 'OBJECT'):
             with open('twilight{}.list'.format(file_label_txt), 'a') as twilight_file:
