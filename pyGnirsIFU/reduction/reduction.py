@@ -14,7 +14,7 @@ DEFAULT_111mm_G5505_grating = {'FLAT': {'thr_flo': 0.15,
 
 def _clean_list_of_files(list_of_files, list_name):
     if os.path.exists(list_name):
-        shutil(list_name, list_name + '.backup')
+        shutil.move(list_name, list_name + '.backup')
 
     data_table = ascii.read(list_of_files)
     file_list = list(data_table['col1'].data)
