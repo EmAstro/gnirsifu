@@ -6,17 +6,17 @@ from astropy.io import ascii
 
 # gnirs.nsprepare.eParam()
 
-from . import default
+from . import parameters
 
 gnirs.nsheaders('gnirs')
-default = default.Default()
+reduction_parameters = parameters.Reduction()
 
 
 class Reduce:
-    def __init__(self, file_list=[], processed_file_list=[], logfile=default.logfile):
+    def __init__(self, file_list=[], processed_file_list=[], epar=reduction_parameters):
         self.file_list = file_list
         self.processed_file_list = processed_file_list
-        self.logfile = logfile
+        self.epar = epar
 
     @property
     def file_list(self):
@@ -35,16 +35,21 @@ class Reduce:
         self._processed_file_list = processed_file_list
 
     @property
-    def logfile(self):
-        return self._logfile
+    def epar(self):
+        return self._epar
 
-    @logfile.setter
-    def logfile(self, logfile):
-        self._logfile = logfile
+    @epar.setter
+    def epar(self, epar):
+        self._epar = epar
 
     def from_file(self, text_file):
         data_table = ascii.read(text_file)
         self.file_list = list(data_table['col1'].data)
+
+    def purge_all_processed(self):
+        for processed_file in self.processed_file_list:
+            iraf.imdel(processed_file)
+            self.processed_file_list.remove(processed_file)
 
 
 class Flat(Reduce):

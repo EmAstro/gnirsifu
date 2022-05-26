@@ -1,8 +1,8 @@
 GRATINGS = ['111/mm_G5505']
 
 
-class Default:
-    def __init__(self, logfile='GnirsIFU.log', grating='111lm'):
+class Reduction:
+    def __init__(self, logfile='GnirsIFU.log', grating='111/mm_G5505'):
         self.logfile = logfile
         self.grating = grating
 
