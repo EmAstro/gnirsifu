@@ -37,7 +37,7 @@ def parser(options=None):
                         help=r"Target name")
     parser.add_argument("-d", "--data_directory", nargs="+", type=str, default="./",
                         help=r"Directory where the data are")
-    parser.add_argument("-a", "--append", nargs="+", action="store_true", default=False,
+    parser.add_argument("-a", "--append", action="store_true", default=False,
                         help=r"Append over already created files")
     if options is None:
         args = parser.parse_args()
