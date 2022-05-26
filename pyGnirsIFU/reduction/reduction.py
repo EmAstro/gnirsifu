@@ -58,7 +58,7 @@ class Reduction:
 
 class Flats(Reduction):
     def __init__(self, file_list):
-        super(self, file_list=file_list).__init__()
+        super(self, file_list=file_list, ).__init__()
 
     def reduce(self):
         for flat_file in self.flat_list:
