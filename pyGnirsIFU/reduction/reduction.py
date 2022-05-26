@@ -3,68 +3,31 @@ from pyraf.iraf import gemini
 from pyraf.iraf import gemtools
 from pyraf.iraf import gnirs
 from astropy.io import ascii
-
-# gnirs.nsprepare.eParam()
-
-from pyGnirsIFU.reduction import parameters
+import os.path
 
 gnirs.nsheaders('gnirs')
 
-OBSTYPE = ['flat']
+DEFAULT_111mm_G5505_grating = {'FLAT': {'thr_flo': 0.15,
+                                        'thr_up': 1.55}}
 
 
-class Reduction:
-    def __init__(self, reduction_parameters=None, flat_list=[]):
-        from IPython import embed
-        embed()
-        self.reduction_parameters = reduction_parameters
-        self.flat_list = flat_list
-
-    @property
-    def reduction_parameters(self):
-        return self._reduction_parameters
-
-    @reduction_parameters.setter
-    def reduction_parameters(self, reduction_parameters):
-        from IPython import embed
-        embed()
-        if reduction_parameters is None:
-            _reduction_parameters = parameters.Reduction()
-            self._reduction_parameters = _reduction_parameters
-        elif isinstance(reduction_parameters, parameters.Reduction):
-            self._reduction_parameters = reduction_parameters
-        else:
-            raise TypeError("reduction_parameters not a parameters.Reduction object")
-
-    @property
-    def flat_list(self):
-        return self._flat_list
-
-    @flat_list.setter
-    def flat_list(self, flat_list):
-        self._flat_list = flat_list
-
-    def from_file(self, text_file, file_type='flat'):
-        data_table = ascii.read(text_file)
-        file_list = list(data_table['col1'].data)
-        if file_type == 'flat':
-            self.flat_list = file_list
-
-    def purge_all_processed(self, file_type='flat'):
-        if file_type == 'flat':
-            for processed_file in self.processed_flat_list:
-                iraf.imdel(processed_file)
-                self.processed_flat_list.remove(processed_file)
+def _clean_list_of_files(list_of_files, list_name):
+    data_table = ascii.read(list_of_files)
+    file_list = list(data_table['col1'].data)
+    list_file = open(list_name, 'w')
+    if os.path.exists(list_name):
+        os.rename(list_name, list_name + '.backup')
+    for file_name in file_list:
+        list_file.write(file_name)
+    list_file.close()
 
 
-"""
-class Flats(Reduction):
-    def __init__(self, file_list):
-        super(self, file_list=file_list, ).__init__()
+def reduce_flats(list_of_files, grating='111/mm_G5505', parameters=None):
+    if (grating == '111/mm_G5505') & (parameters is None):
+        parameters = DEFAULT_111lm_grating['FLAT']
+    elif parameters is not None:
+        parameters = parameters
+    _clean_list_of_files(list_of_files, 'flat.lis')
+    gnirs.nsprepare('@flat.lis', shiftx='INDEF',shifty='INDEF')
+    # nsreduce n @ flat.lis fl_cut + fl_nsappw - fl_sky - fl_dark - fl_flat -
 
-    def reduce(self):
-        for flat_file in self.flat_list:
-            gnirs.nsprepare(self.flat_list, shiftx='INDEF', shifty='INDEF', logfile=self.epar.logfile)
-    # nsprepare @flat.lis shiftx = INDEF shifty = INDEF nsreduce n @flat.lis fl_cut+ fl_nsappw- fl_sky- fl_dark- fl_flat-
-    # nsflat rn@flat.lis darks = "" flatfile = "" darkfile = "" fl_save_dark + process = "fit" thr_flo = 0.15 thr_fup = 1.55
-"""
