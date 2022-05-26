@@ -29,8 +29,8 @@ def get_requirements():
 
 
 NAME = 'pyGinirsIFU'
-VERSION = '0.1.1dev'
-AUTHOR = 'Ema'
+VERSION = '0.0.0dev'
+AUTHOR = 'EmAstro'
 
 
 def run_setup(scripts, packages, install_requires):
@@ -42,7 +42,7 @@ def run_setup(scripts, packages, install_requires):
           license='MIT',
           description='GNIRS IFU Useful Tools',
           long_description=open('README.md').read(),
-          author='Ema and the GEMINI/GNIRS team',
+          author='EmAstro and the GEMINI/GNIRS team',
           author_email='emanuele.farina@noirlab.edu',
           keywords='GEMINI GNIRS IFU spectroscopy astronomy',
           url='https://github.com/EmAstro/pyGnirsIFU.git',
@@ -60,7 +60,7 @@ def run_setup(scripts, packages, install_requires):
               'Natural Language :: English',
               'Operating System :: OS Independent',
               'Programming Language :: Python',
-              'Programming Language :: Python :: 3.6',
+              'Programming Language :: Python :: 2.7',
               'Topic :: Scientific/Engineering :: Astronomy',
               'Topic :: Software Development :: Libraries :: Python Modules',
               'Topic :: Software Development :: User Interfaces'

@@ -1,0 +1,10 @@
+#!/usr/bin/env python3
+
+r"""Sort fits files in a directory
+"""
+
+from pyGnirsIFU.scripts import gnirs_ifu_sort
+
+if __name__ == '__main__':
+    args = gnirs_ifu_sort.parser()
+    gnirs_ifu_sort.main(args)
