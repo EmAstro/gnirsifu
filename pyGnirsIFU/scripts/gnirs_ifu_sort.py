@@ -14,9 +14,9 @@ from pyGnirsIFU import __version__
 from pyGnirsIFU.utils import gnirs_fits
 
 KEYWORD_LIST = ['OBJECT', 'OBSTYPE', 'GRATING', 'GRATWAVE', 'DATE-OBS', 'TIME-OBS', 'EXPTIME']
-TO_BE_REMOVED_LIST = ['sci_grating*_wl*.list',
-                      'arc_grating*_wl*.list',
-                      'flat_grating*_wl*.list',
+TO_BE_REMOVED_LIST = ['science__grating*_wl*.list',
+                      'arc______grating*_wl*.list',
+                      'flat_____grating*_wl*.list',
                       'twilight_grating*_wl*.list',
                       'telluric_grating*_wl*.list']
 
@@ -59,9 +59,10 @@ def _remove_text_files(data_directory):
 
 def main(args):
     file_list = sorted(glob.glob(args.data_directory + "/*.fits"))
+    print("Sorting files for object: {}".format(args.object_name))
     for file_name in file_list:
         primary_header = gnirs_fits.get_primary_header(file_name)
-        grating_txt = '_' + str(primary_header["GRATING"]).strip().replace("/", "").ljust(8, "_")
+        grating_txt = '_' + str(primary_header["GRATING"]).strip().replace("/", "").ljust(11, "_")
         grating_wavelength_txt = '_' + str(primary_header["GRATWAVE"]).strip().ljust(5, "0") + "nm"
         file_label_txt = "_grating" + grating_txt + "_wl" + grating_wavelength_txt
         txt_line = file_name
@@ -69,13 +70,13 @@ def main(args):
             txt_line = txt_line + '  ' + '{:<25}'.format(str(primary_header[keyword]))
         txt_line = txt_line + '\n'
         if (primary_header['OBJECT'] == args.object_name) & (primary_header['OBSTYPE'] == 'OBJECT'):
-            with open('sci{}.list'.format(file_label_txt), 'a') as sci_file:
+            with open('science__{}.list'.format(file_label_txt), 'a') as sci_file:
                 sci_file.write(txt_line)
         elif primary_header['OBSTYPE'] == 'ARC':
-            with open('arc{}.list'.format(file_label_txt), 'a') as arc_file:
+            with open('arc______{}.list'.format(file_label_txt), 'a') as arc_file:
                 arc_file.write(txt_line)
         elif primary_header['OBSTYPE'] == 'FLAT':
-            with open('flat{}.list'.format(file_label_txt), 'a') as flat_file:
+            with open('flat_____{}.list'.format(file_label_txt), 'a') as flat_file:
                 flat_file.write(txt_line)
         elif (primary_header['OBJECT'] == 'Twilight') & (primary_header['OBSTYPE'] == 'OBJECT'):
             with open('twilight{}.list'.format(file_label_txt), 'a') as twilight_file:
