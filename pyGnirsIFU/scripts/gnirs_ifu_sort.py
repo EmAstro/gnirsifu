@@ -66,9 +66,8 @@ def main(args):
     data_directory = lists.from_list_to_string(args.data_directory)
     root_filename = lists.from_list_to_string(args.root_filename)
     if not args.append:
-        _remove_text_files(args.data_directory[0])
-    from IPython import embed
-    embed()
+        print("Cleaning old lists")
+        _remove_text_files(data_directory)
     file_list = sorted(glob.glob(data_directory + "/" + root_filename + "*.fits"))
     print("Sorting {} files for object: {}".format(len(file_list), object_name))
 
