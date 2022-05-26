@@ -11,7 +11,7 @@ import glob as glob
 import sys
 
 from pyGnirsIFU import __version__
-from pyGnirsIFU import utils
+from pyGnirsIFU.utils import gnirs_fits
 
 KEYWORD_LIST = ['OBJECT', 'OBSTYPE', 'GRATING', 'GRATWAVE', 'DATE-OBS', 'TIME-OBS', 'EXPTIME']
 TO_BE_REMOVED_LIST = ['sci_grating*_wl*.list',
@@ -60,7 +60,7 @@ def _remove_text_files(data_directory):
 def main(args):
     file_list = sorted(glob.glob(args.data_directory + "/*.fits"))
     for file_name in file_list:
-        primary_header = utils.fits.get_primary_header(file_name)
+        primary_header = gnirs_fits.get_primary_header(file_name)
         grating_txt = '_' + str(primary_header["GRATING"]).strip().ljust(8, "_")
         grating_wavelength_txt = '_' + str(primary_header["GRATWAVE"]).strip().ljust(5, "0") + "nm"
         file_label_txt = "_grating" + grating_txt + "_wl" + grating_wavelength_txt
