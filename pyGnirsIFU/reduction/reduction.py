@@ -15,6 +15,8 @@ OBSTYPE = ['flat']
 
 class Reduction:
     def __init__(self, reduction_parameters=None, flat_list=[]):
+        from IPython import embed
+        embed()
         self.reduction_parameters = reduction_parameters
         self.flat_list = flat_list
 
