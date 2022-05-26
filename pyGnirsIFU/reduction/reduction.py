@@ -24,7 +24,7 @@ def _clean_list_of_files(list_of_files, list_name):
 
 def reduce_flats(list_of_files, grating='111/mm_G5505', parameters=None):
     if (grating == '111/mm_G5505') & (parameters is None):
-        parameters = DEFAULT_111lm_grating['FLAT']
+        parameters = DEFAULT_111mm_G5505_grating['FLAT']
     elif parameters is not None:
         parameters = parameters
     _clean_list_of_files(list_of_files, 'flat.lis')
