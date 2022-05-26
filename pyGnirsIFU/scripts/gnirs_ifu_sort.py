@@ -19,7 +19,7 @@ TO_BE_REMOVED_LIST = ['science_*grating_*_wl_*.list',
                       'arc_*grating_*_wl_*.list',
                       'flat_*grating_*_wl_*.list',
                       'twilight_*grating_*_wl_*.list',
-                      'telluric_*ßgrating_*_wl_*.list']
+                      'telluric_*grating_*_wl_*.list']
 
 # ToDo fill example
 EXAMPLES = str(r"""EXAMPLES:""" + """\n""" + """\n""" +
