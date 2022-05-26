@@ -59,6 +59,9 @@ def _remove_text_files(data_directory):
 
 
 def main(args):
+    from IPython import embed
+    embed()
+
     if len(args.object_name) > 1:
         raise ValueError('Please include only one object at the time')
     object_name = args.object_name[0]
@@ -69,8 +72,7 @@ def main(args):
     file_list = sorted(glob.glob(args.data_directory[0] + "/*.fits"))
     print("Sorting {} files for object: {}".format(len(file_list), object_name))
 
-    from IPython import embed
-    embed()
+
 
     for file_name in file_list:
         primary_header = gnirs_fits.get_primary_header(file_name)
