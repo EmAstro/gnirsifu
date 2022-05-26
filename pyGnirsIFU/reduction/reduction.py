@@ -9,11 +9,10 @@ from astropy.io import ascii
 from . import parameters
 
 gnirs.nsheaders('gnirs')
-reduction_parameters = parameters.Reduction()
 
 
 class Reduction:
-    def __init__(self, file_list=[], processed_file_list=[], epar=reduction_parameters):
+    def __init__(self, file_list=[], processed_file_list=[], epar=None):
         self.file_list = file_list
         self.processed_file_list = processed_file_list
         self.epar = epar
@@ -40,7 +39,12 @@ class Reduction:
 
     @epar.setter
     def epar(self, epar):
-        self._epar = epar
+        if epar is None:
+            self._epar = parameters.Reduction()
+        elif isinstance(epar, parameters.Reduction):
+            self._epar = epar
+        else:
+            raise TypeError("epar not a parameters.Reduction object")
 
     def from_file(self, text_file):
         data_table = ascii.read(text_file)
@@ -58,6 +62,6 @@ class Flats(Reduction):
 
     def reduce(self):
         for flat_file in self.flat_list:
-            gnirs.nsprepare(self.flat_list, shiftx='INDEF', shifty='INDEF', logfile=self.logfile)
+            gnirs.nsprepare(self.flat_list, shiftx='INDEF', shifty='INDEF', logfile=self.epar.logfile)
     # nsprepare @flat.lis shiftx = INDEF shifty = INDEF nsreduce n @flat.lis fl_cut+ fl_nsappw- fl_sky- fl_dark- fl_flat-
     # nsflat rn@flat.lis darks = "" flatfile = "" darkfile = "" fl_save_dark + process = "fit" thr_flo = 0.15 thr_fup = 1.55
