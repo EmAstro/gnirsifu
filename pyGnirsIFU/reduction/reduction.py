@@ -15,9 +15,7 @@ DEFAULT_111mm_G5505_grating = {'FLAT': {'thr_flo': 0.15,
 def _clean_list_of_files(list_of_files, list_name):
     if os.path.exists(list_name):
         shutil.move(list_name, list_name + '.backup')
-
     data_table = ascii.read(list_of_files, format='no_header')
-    print(data_table)
     file_list = list(data_table['col1'].data)
     list_file = open(list_name, 'w')
 
@@ -30,6 +28,8 @@ def _delete_files_in_list(list_of_files, prefix=''):
     data_table = ascii.read(list_of_files, format='no_header')
     file_list = list(data_table['col1'].data)
     for file_name in file_list:
+        from IPython import embed
+        embed()
         file_name_cleaned = file_name.split['/'][:-2] + prefix + file_name.split['/'][-1]
         if os.path.exists(file_name_cleaned):
             shutil.move(file_name_cleaned, file_name_cleaned + '.backup')
