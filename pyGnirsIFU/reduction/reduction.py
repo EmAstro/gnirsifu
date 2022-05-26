@@ -28,9 +28,10 @@ def _delete_files_in_list(list_of_files, prefix=''):
     data_table = ascii.read(list_of_files, format='no_header')
     file_list = list(data_table['col1'].data)
     for file_name in file_list:
-        from IPython import embed
-        embed()
-        file_name_cleaned = file_name.split['/'][:-2] + prefix + file_name.split['/'][-1]
+        if '/' in file_name:
+            file_name_cleaned = file_name.rsplit('/', 1)[0] + '/' + prefix + file_name.rsplit('/', 1)[1]
+        else:
+            file_name_cleaned = prefix + file_name
         if os.path.exists(file_name_cleaned):
             shutil.move(file_name_cleaned, file_name_cleaned + '.backup')
 
