@@ -1,1 +1,2 @@
 # Required Packages for pyGnirsIFU
+astropy>=2.0
