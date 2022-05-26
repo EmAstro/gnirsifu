@@ -59,6 +59,8 @@ def _remove_text_files(data_directory):
 
 def main(args):
     file_list = sorted(glob.glob(args.data_directory + "/*.fits"))
+    from IPython import embed
+    embed()
     if type(args.object_name) is list:
         object_name = args.object_name[0]
     else:
