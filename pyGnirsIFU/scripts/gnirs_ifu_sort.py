@@ -59,6 +59,10 @@ def _remove_text_files(data_directory):
 
 def main(args):
     file_list = sorted(glob.glob(args.data_directory + "/*.fits"))
+    if type(args.object_name) is list:
+        object_name = args.object_name[0]
+    else:
+        object_name = args.object_name
     print("Sorting files for object: {}".format(args.object_name))
     for file_name in file_list:
         primary_header = gnirs_fits.get_primary_header(file_name)
