@@ -4,6 +4,7 @@ from pyraf.iraf import gemtools
 from pyraf.iraf import gnirs
 from astropy.io import ascii
 import os.path
+import shutil
 
 gnirs.nsheaders('gnirs')
 
@@ -12,11 +13,13 @@ DEFAULT_111mm_G5505_grating = {'FLAT': {'thr_flo': 0.15,
 
 
 def _clean_list_of_files(list_of_files, list_name):
+    if os.path.exists(list_name):
+        shutil(list_name, list_name + '.backup')
+
     data_table = ascii.read(list_of_files)
     file_list = list(data_table['col1'].data)
     list_file = open(list_name, 'w')
-    if os.path.exists(list_name):
-        os.rename(list_name, list_name + '.backup')
+
     for file_name in file_list:
         list_file.write(file_name)
     list_file.close()
