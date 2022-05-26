@@ -12,10 +12,10 @@ gnirs.nsheaders('gnirs')
 
 
 class Reduction:
-    def __init__(self, file_list=[], processed_file_list=[], epar=None):
+    def __init__(self, file_list=[], processed_file_list=[], reduction_parameters=None):
         self.file_list = file_list
         self.processed_file_list = processed_file_list
-        self.epar = epar
+        self.reduction_parameters = reduction_parameters
 
     @property
     def file_list(self):
@@ -34,15 +34,15 @@ class Reduction:
         self._processed_file_list = processed_file_list
 
     @property
-    def epar(self):
-        return self._epar
+    def reduction_parameters(self):
+        return self._reduction_parameters
 
-    @epar.setter
-    def epar(self, epar):
-        if epar is None:
-            self._epar = parameters.Reduction()
-        elif isinstance(epar, parameters.Reduction):
-            self._epar = epar
+    @reduction_parameters.setter
+    def reduction_parameters(self, reduction_parameters):
+        if reduction_parameters is None:
+            self._reduction_parameters = parameters.Reduction()
+        elif isinstance(reduction_parameters, parameters.Reduction):
+            self._reduction_parameters = reduction_parameters
         else:
             raise TypeError("epar not a parameters.Reduction object")
 
